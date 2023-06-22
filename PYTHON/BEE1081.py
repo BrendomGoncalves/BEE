@@ -10,7 +10,8 @@ def dfs(v, qnt_espacos=0):
                 print(espacos + '' + str(v) + "-" + str(w) + " pathR(G," + str(w) + ")")
                 dfs(w, qnt_espacos + 1)
                 if adj[w][v] == 1:
-                    print(f"    {w}-{v}")
+                    #print(f"    {w}-{v}")
+                    print("    " + str(w) + "-" + str(v))
 
 N = int(input())
 
@@ -36,7 +37,8 @@ for k in range(0, N):
     for i in range(0, V + 1):  # preenchimento dos vertices visitados
         lbl.append(-1)
 
-    print(f"Caso {k+1}:")
+    #print(f"Caso {k+1}:")
+    print("Caso " + str(k+1))
 
     for i in range(0, V + 1):  # chamando função "dfs" de 0 a V
         if any(i in edge for edge in vertices) and lbl[i] == -1 and i > 0:
