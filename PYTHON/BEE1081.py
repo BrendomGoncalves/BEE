@@ -6,7 +6,8 @@ def dfs(v, qnt_espacos=0):
     for w in range(0, V + 1):
         if adj[v][w] == 1:
             if lbl[w] == -1:
-                print(f"{espacos}{v}-{w} pathR(G,{w})")
+                #print(f"{espacos}{v}-{w} pathR(G,{w})")
+                print(espacos + '' + str(v) + "-" + str(w) + " pathR(G," + str(w) + ")")
                 dfs(w, qnt_espacos + 1)
                 if adj[w][v] == 1:
                     print(f"    {w}-{v}")
