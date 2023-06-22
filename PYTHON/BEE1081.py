@@ -38,7 +38,7 @@ for k in range(0, N):
         lbl.append(-1)
 
     #print(f"Caso {k+1}:")
-    print("Caso " + str(k+1))
+    print("Caso " + str(k+1) + ":")
 
     for i in range(0, V + 1):  # chamando função "dfs" de 0 a V
         if any(i in edge for edge in vertices) and lbl[i] == -1 and i > 0:
