@@ -1,47 +1,47 @@
-def dfs(v, qnt_espacos=0):
-    global V, adj, lbl
-    lbl[v] = 1
-    espacos = "  " * qnt_espacos
+def buscaP(vertice, espaco):
+    """
+    Realiza uma busca em profundidade dos vizinhos dos vertices.
+    
+    Args:
+        vertice (int): vertice atual.
+        espaco (str): espacos para o vertice atual.
+    """
+    global eh_grafo
+    visitados[vertice] = True # Marcando o vertice atual como visitado
+    espaco = espaco.join("  ") # Concatenando espacos
 
-    for w in range(0, V + 1):
-        if adj[v][w] == 1:
-            if lbl[w] == -1:
-                #print(f"{espacos}{v}-{w} pathR(G,{w})")
-                print(espacos + '' + str(v) + "-" + str(w) + " pathR(G," + str(w) + ")")
-                dfs(w, qnt_espacos + 1)
-                if adj[w][v] == 1:
-                    #print(f"    {w}-{v}")
-                    print("    " + str(w) + "-" + str(v))
+    for i in range(0, q_Vertices):
+        if matriz_Grafo[vertice][i]: # Verificando se a coordenada eh uma aresta
+            eh_grafo = True # Sinalizando que iniciou um grafo
+            if not visitados[i]: # Verificando se jah visitou o vertice atual
+                print(espaco + str(vertice) + '-' + str(i) + ' pathR(G,' + str(i) + ')')
+                buscaP(i, espaco) # Fazendo a busca dos vizinhos do vertice "i"
+            else: # Se jah foi visitado, printando somente a aresta
+                print(espaco + str(vertice) + '-' + str(i))
 
-N = int(input())
+# INICIO DO CODIGO
+caso_Atual = 0
+num_Casos = int(input())
 
-for k in range(0, N):
-    lbl = []  # vertices visitados
-    adj = []  # matriz do grafo
-    V, E = map(int, input().split())
-    vertices = []
+while(caso_Atual < num_Casos):
+    caso_Atual += 1
 
-    for i in range(0, E): # entrada das arestas
-        x, y = map(int, input().split())
-        vertices.append([x, y])
+    q_Vertices, q_Arestas = map(int, input().split())
 
-    for i in range(0, V + 1):  # preenchimento da matriz "adj"
-        linha = []
-        for j in range(0, V + 1):
-            linha.append(-1)
-        adj.append(linha)
+    visitados = [False for _ in range(q_Vertices)]
+    matriz_Grafo = [[False] * q_Vertices for _ in range(q_Vertices)]
 
-    for i, j in vertices:  # preenchimento das arestas na matriz
-        adj[i][j] = 1
+    for i in range(0, q_Arestas): # Inicializando os vertices na matriz do grafo
+        u, v = map(int, input().split()) # Entrada da coordenada
+        matriz_Grafo[u][v] = True
 
-    for i in range(0, V + 1):  # preenchimento dos vertices visitados
-        lbl.append(-1)
+    print('Caso ' + str(caso_Atual) + ':')
 
-    #print(f"Caso {k+1}:")
-    print("Caso " + str(k+1) + ":")
+    for i in range(0, q_Vertices):
+        espaco = "" # Inicializando os espaços
+        eh_grafo = False # Controle de grafo separado
+        if not visitados[i]:
+            buscaP(i, espaco)
 
-    for i in range(0, V + 1):  # chamando função "dfs" de 0 a V
-        if any(i in edge for edge in vertices) and lbl[i] == -1 and i > 0:
-            print("\n", end='')
-        dfs(i, qnt_espacos=1)
-    del lbl, adj, vertices
+        if eh_grafo: # Verificando se iniciou e finalizou um grafo
+            print("\n", end='') # Criando espacos entre linhas para separar os grafos
